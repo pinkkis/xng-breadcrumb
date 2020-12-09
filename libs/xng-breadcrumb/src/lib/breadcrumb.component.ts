@@ -87,7 +87,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.breadcrumbService.breadcrumbs$.subscribe(
+    this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
+    this.subscription = this.breadcrumbs$.subscribe(
       (breadcrumbs) => {
         this.breadcrumbs = breadcrumbs
           .map((breadcrumb) => {
@@ -116,11 +117,9 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  handleRoute(breadcrumb: BreadcrumbDefinition) {
-    const routeLink = breadcrumb.routeInterceptor
+  getRoute(breadcrumb: BreadcrumbDefinition) {
+    return breadcrumb.routeInterceptor
       ? breadcrumb.routeInterceptor(breadcrumb.routeLink, breadcrumb)
       : breadcrumb.routeLink;
-    const { queryParams, fragment } = breadcrumb;
-    this.router.navigate([routeLink], { queryParams, fragment });
   }
 }

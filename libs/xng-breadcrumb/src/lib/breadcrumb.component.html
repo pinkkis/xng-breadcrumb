@@ -12,7 +12,9 @@
       <li class="xng-breadcrumb-item">
         <a
           *ngIf="!isLast"
-          (click)="handleRoute(breadcrumb)"
+          [routerLink]="getRoute(breadcrumb)"
+          [queryParams]="breadcrumb.queryParams"
+          [fragment]="breadcrumb.fragment"
           class="xng-breadcrumb-link"
           [ngClass]="{ 'xng-breadcrumb-link-disabled': breadcrumb.disable }"
           [attr.aria-disabled]="breadcrumb.disable"
